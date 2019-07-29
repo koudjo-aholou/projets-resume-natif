@@ -39,3 +39,19 @@
   text-align: right;
   width: 6%;
 }
+
+.my-footer{
+  background-color: #26a69a;
+  display: flex;
+  justify-content: space-around;
+ /* align-items: center;
+  text-align: center;*/
+  height: 100px;
+}
+.footer-element{
+  display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    width: 70%;
+}
