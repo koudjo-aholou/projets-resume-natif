@@ -1,0 +1,41 @@
+.product{
+  display: flex;
+  justify-content: space-between;
+}
+.alignement-li{
+  align-items: center;
+}
+
+.wrap-font{
+  font-size:13px;
+  font-weight: 440;
+}
+.wrap-brand{
+  text-align: center;
+  width: 33.33%;
+
+}
+.brand{
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(0,0,0,0.6);
+  padding: 0 12px;
+  border-radius: 16px;
+  background-color: #e4e4e4;
+  margin-bottom: 5px;
+}
+.wrap-product{
+  text-align: left;
+  width: 33.33%;
+}
+
+.wrap-price{
+  text-align: center;
+  width: 24.32%;
+}
+
+.wrap-link{
+  text-align: right;
+  width: 6%;
+}
