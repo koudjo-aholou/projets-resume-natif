@@ -9,3 +9,6 @@
 .label-result{
   width: 40%;
 }
+#loading, #results{
+  display: none;
+}

@@ -1,5 +1,15 @@
 //Listen submit
-document.getElementById("loan-form").addEventListener('submit',calculateResults);
+document.getElementById("loan-form").addEventListener('submit',function(e){
+  
+  //Hide result
+  document.getElementById('results').style.display ='none';
+
+  //Show loader
+  document.getElementById('loading').style.display ='block';
+  setTimeout(calculateResults,2000);
+
+  e.preventDefault();
+});
 
 //function calculate Result
 function calculateResults(e){
@@ -37,26 +47,59 @@ function calculateResults(e){
   const x = Math.pow(1 + calculateInterest, calculatePayment);
   const monthly = (principal * x * calculateInterest) / (x-1);
 
+  //Compute price per square
+  const priceSquare = parseFloat(amount.value / size.value).toFixed(2);
   if(isFinite(monthly)){
     let currency = " €";
     let metreca = " m²";
     let pourcen = " %";
+    let notDefined = "Not defined";
     monthlyPayment.value = parseFloat(monthly.toFixed(2)).toLocaleString() + currency;
+
     totalPayment.value = parseFloat((monthly * calculatePayment).toFixed(2)).toLocaleString() + currency;
+
     //totalPayment.value = parseFloat(totalPayment.value).toLocaleString()
-    totalRent.value = calculateRent.toLocaleString() + currency;
-    m2Price.value =  parseFloat((amount.value / size.value).toFixed(2)).toLocaleString() + metreca;
-    cashFlow.value = parseFloat((monthlyRent.value - monthly).toFixed(2)).toLocaleString() + currency;
+    if(isFinite(priceSquare)){
+      console.log(priceSquare.toLocaleString())
+      m2Price.value =  parseFloat(priceSquare).toLocaleString() + currency;
+    }else{
+      m2Price.value = notDefined;
+      
+    }
+    
+    if(monthlyRent.value.length !==0){
+      cashFlow.value = parseFloat((monthlyRent.value - monthly).toFixed(2)).toLocaleString() + currency;
+    }else{
+      cashFlow.value = notDefined;
+    }
+    
     totalInterest.value = parseFloat((monthly * calculatePayment) - principal.toFixed(2)).toLocaleString() + currency;
-    grossYield.value = ((calculateRent / principal  ) * 100).toFixed(2) + pourcen;
-    netYield.value = ( (calculateRent / (monthly * calculatePayment + fees) ) * 100).toFixed(2) + pourcen;
+
+    if(monthlyRent.value.length !== 0){
+      grossYield.value = ((calculateRent / principal  ) * 100).toFixed(2) + pourcen;
+      netYield.value = ( (calculateRent / (monthly * calculatePayment + fees) ) * 100).toFixed(2) + pourcen;
+      totalRent.value = calculateRent.toLocaleString() + currency;
+    }else{
+      grossYield.value = notDefined;
+      totalRent.value = notDefined;
+      netYield.value = notDefined;
+    }
+    
+    //Show result
+    document.getElementById('results').style.display ='block';
+
+    //Hide result
+    document.getElementById('loading').style.display ='none';
   }else{
     showError("Please Check your number");
   }
-
-  e.preventDefault();
 }
 function showError(error){
+  //Hide result
+  document.getElementById('results').style.display ='none';
+
+  //Show loader
+  document.getElementById('loading').style.display ='block';
   //Create a div
   const errorDiv = document.createElement('div');
 
@@ -78,5 +121,6 @@ function showError(error){
 }
 //Clear error
 function clearError(){
+  
   document.querySelector('.alert').remove();
 }
