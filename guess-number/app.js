@@ -22,7 +22,7 @@ maxNum.textContent = max;
 game.addEventListener('mousedown',function(e){
   if(e.target.className === "play-again"){
    // console.log("refresh");
-    guessesLeft = 3;
+    clear();
     window.location.reload();
   }
 });
@@ -45,13 +45,13 @@ guessBtn.addEventListener('click',function(){
   // Check if won
   if(guess == winningNumber){
     // Game over - lost
-    gameOver(true,`Congratulation ! ${winningNumber} is the correct answer !`,"https://media.giphy.com/media/3o7qDEq2bMbcbPRQ2c/giphy.gif","200",true);
+    gameOver(true,`Congratulation ! ${winningNumber} is the correct answer !`,"https://media.giphy.com/media/3o7qDEq2bMbcbPRQ2c/giphy.gif","250",true);
 
   }else if(guess !== winningNumber && !isNaN(guess)){
     guessesLeft -= 1;
     if(guessesLeft === 0){
       // Game over - lost
-      gameOver(false,`Game Over ! The correct answert was ${winningNumber}. Play again ?`,"https://media.giphy.com/media/vX9WcCiWwUF7G/giphy.gif","300",true);
+      gameOver(false,`Game Over ! The correct answert was ${winningNumber}. Play again ?`,"https://media.giphy.com/media/vX9WcCiWwUF7G/giphy.gif","250",true);
     }
     else{
       // Game continues - answer won
@@ -61,7 +61,7 @@ guessBtn.addEventListener('click',function(){
       
       setMessage(`${guess} is not correct... ${guessesLeft} guesses left`,"red");
       imgSrc.src = "https://media.giphy.com/media/HBGQcKyibP0je/giphy.gif";
-      imgSrc.width ="300";
+      imgSrc.width ="250";
       game.appendChild(imgSrc);
     }
   }
@@ -88,6 +88,16 @@ function gameOver(won,msg,img,width,input){
 //Random number
 function getRandomNum(min,max){
   return Math.floor(Math.random()*(max-min+1)+min);
+}
+
+//Clear before refresh
+function clear(){
+  guessesLeft = 3;
+  game.appendChild(imgSrc).remove();
+  message.textContent = "";
+  guessInput.value = '';
+  guessInput.style.borderColor = "";
+  guessInput.disabled = false;
 }
 
 //Set message
